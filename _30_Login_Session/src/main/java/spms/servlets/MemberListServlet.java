@@ -117,7 +117,8 @@ public class MemberListServlet extends HttpServlet{
 			// 생성한 역순으로 닫아준다.
 			try {if(rs!=null) rs.close();} catch(Exception e) {}
 			try {if(stmt!=null) stmt.close();} catch(Exception e) {}
-			try {if(conn!=null) conn.close();} catch(Exception e) {}
+			// ServletContext에 공유하는 Connection객체는 닫으면 다른곳에서 사용 못한다.
+//			try {if(conn!=null) conn.close();} catch(Exception e) {}
 		}
 	}
 

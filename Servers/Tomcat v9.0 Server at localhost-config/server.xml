@@ -160,7 +160,7 @@
              Note: The pattern used is equivalent to using pattern="common" -->
         <Valve className="org.apache.catalina.valves.AccessLogValve" directory="logs" pattern="%h %l %u %t &quot;%r&quot; %s %b" prefix="localhost_access_log" suffix=".txt"/>
 
-      <Context docBase="_25_MemberListServlet_include_jsp" path="/_25_MemberListServlet_include_jsp" reloadable="true" source="org.eclipse.jst.jee.server:_25_MemberListServlet_include_jsp"/><Context docBase="_27_MemberListServlet_Including" path="/_27_MemberListServlet_Including" reloadable="true" source="org.eclipse.jst.jee.server:_27_MemberListServlet_Including"/><Context docBase="_29_MemberList_ServletContext_Connection" path="/_29_MemberList_ServletContext_Connection" reloadable="true" source="org.eclipse.jst.jee.server:_29_MemberList_ServletContext_Connection"/></Host>
+      <Context docBase="_25_MemberListServlet_include_jsp" path="/_25_MemberListServlet_include_jsp" reloadable="true" source="org.eclipse.jst.jee.server:_25_MemberListServlet_include_jsp"/><Context docBase="_27_MemberListServlet_Including" path="/_27_MemberListServlet_Including" reloadable="true" source="org.eclipse.jst.jee.server:_27_MemberListServlet_Including"/><Context docBase="_29_MemberList_ServletContext_Connection" path="/_29_MemberList_ServletContext_Connection" reloadable="true" source="org.eclipse.jst.jee.server:_29_MemberList_ServletContext_Connection"/><Context docBase="_30_Login_Session" path="/_30_Login_Session" reloadable="true" source="org.eclipse.jst.jee.server:_30_Login_Session"/></Host>
     </Engine>
   </Service>
 </Server>

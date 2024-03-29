@@ -8,6 +8,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebInitParam;
 import javax.servlet.annotation.WebServlet;
@@ -15,17 +16,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet(
-		urlPatterns = {"/member/update"},
-		initParams= {
-				@WebInitParam(name = "driver", value = "com.mysql.cj.jdbc.Driver"),
-				@WebInitParam(name = "url", value = "jdbc:mysql://localhost:4306/studydb"),
-				@WebInitParam(name = "username", value = "study"),
-				@WebInitParam(name = "password", value = "study")
-				
-		})
-
-
+@WebServlet("/member/update")
 public class MemberUpdateServlet extends HttpServlet{
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -35,11 +26,12 @@ public class MemberUpdateServlet extends HttpServlet{
 		
 		try {
 			// 메모리에 클래스 로딩
-			DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
+			ServletContext sc = this.getServletContext();
+			Class.forName(sc.getInitParameter("driver"));
 			conn = DriverManager.getConnection(
-					"jdbc:mysql://localhost:4306/studydb",	// JDBC url
-					"study",								// id
-					"study");								// password
+					sc.getInitParameter("url"),	// JDBC url
+					sc.getInitParameter("username"),								// id
+					sc.getInitParameter("password"));								// password
 			stmt = conn.createStatement();
 			rs = stmt.executeQuery("SELECT mno, mname, email, cre_date" +
 								 " FROM members" +
@@ -58,7 +50,9 @@ public class MemberUpdateServlet extends HttpServlet{
 			out.println("이메일: <input type='text' name='email'" + 
 						" value='" + rs.getString("email") + "'><br>");
 			out.println("가입일: " + rs.getDate("CRE_DATE") + "<br>");
-			out.println("<input type='submit' value='저장'");
+			out.println("<input type='submit' value='저장'>");
+			out.println("<input type='button' value='삭제'" +
+			"onclick='location.href=\"delete?no=" + req.getParameter("no") + "\"'>");
 			out.println("<input type='button' value='취소'" + 
 						" onclick='location.href=\"list\"'>");
 			out.println("</form>");
@@ -84,11 +78,12 @@ public class MemberUpdateServlet extends HttpServlet{
 		
 		try {
 			// 메모리에 클래스 로딩
-			DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
+			ServletContext sc = this.getServletContext();
+			Class.forName(sc.getInitParameter("driver"));
 			conn = DriverManager.getConnection(
-					this.getInitParameter("url"),
-					this.getInitParameter("username"),
-					this.getInitParameter("password"));							// password
+					sc.getInitParameter("url"),	// JDBC url
+					sc.getInitParameter("username"),								// id
+					sc.getInitParameter("password"));							// password
 			stmt = conn.prepareStatement(
 					"update members set email=?, mname=?, mod_date=now()"
 					+ " where mno=?");

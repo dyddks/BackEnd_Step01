@@ -23,9 +23,12 @@ public class MemberAddServlet extends HttpServlet{
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		System.out.println("MemberAddServlet::doGet() 호출");
 		
-		RequestDispatcher rd = req.getRequestDispatcher(
-				"/member/MemberForm.jsp");
-		rd.forward(req, resp);
+//		DispatchServlet에 jsp이동을 맡긴다.
+		req.setAttribute("viewUrl", "/member/MemberForm.jsp");
+		
+//		RequestDispatcher rd = req.getRequestDispatcher(
+//				"/member/MemberForm.jsp");
+//		rd.forward(req, resp);
 	}
 	
 	@Override
@@ -35,18 +38,24 @@ public class MemberAddServlet extends HttpServlet{
 		try {
 			ServletContext sc = this.getServletContext();
 			MemberDao memberDao = (MemberDao)sc.getAttribute("memberDao");
-		      memberDao.insert(new Member()
-		        .setEmail(req.getParameter("email"))
-		        .setPassword(req.getParameter("password"))
-		        .setName(req.getParameter("name")));
-
-			resp.sendRedirect("list");
+			Member member = (Member)req.getAttribute("member");
+			memberDao.insert(member);
+			
+			req.setAttribute("viewUrl", "redirect:list.do");
+			
+//		      memberDao.insert(new Member()
+//		        .setEmail(req.getParameter("email"))
+//		        .setPassword(req.getParameter("password"))
+//		        .setName(req.getParameter("name")));
+//
+//			resp.sendRedirect("list");
 
 		}catch(Exception e) {
-			e.printStackTrace();
-			req.setAttribute("error", e);
-			RequestDispatcher rd = req.getRequestDispatcher("/Error.jsp");
-			rd.forward(req, resp);
+			throw new ServletException(e);
+//			e.printStackTrace();
+//			req.setAttribute("error", e);
+//			RequestDispatcher rd = req.getRequestDispatcher("/Error.jsp");
+//			rd.forward(req, resp);
 			
 		}
 	}

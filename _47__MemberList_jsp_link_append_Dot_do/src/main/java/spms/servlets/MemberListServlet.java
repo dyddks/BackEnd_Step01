@@ -30,8 +30,9 @@ public class MemberListServlet extends HttpServlet{
 			ServletContext sc = this.getServletContext();
 			MemberDao memberDao = (MemberDao)sc.getAttribute("memberDao");
 			List<Member> members = memberDao.selectList();
-
+			req.setAttribute("members", members);
 //			jsp이동을 위한 jsp페이지 정보를 request에 저장
+			
 			req.setAttribute("viewUrl", "/member/MemberList.jsp");
 			
 //			이제 jsp로 직접 보내는 것이 아니라

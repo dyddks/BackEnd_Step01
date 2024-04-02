@@ -38,7 +38,8 @@ public class DispatchServlet extends HttpServlet{
 				if(req.getParameter("email") != null) {
 					req.setAttribute("member", new Member()
 							.setEmail(req.getParameter("email"))
-							.setNo(Integer.parseInt(req.getParameter("no")))
+							
+							.setPassword(req.getParameter("password"))
 							.setName(req.getParameter("name")));
 				}
 			}else if("/member/update.do".equals(servletPath)) {
@@ -46,7 +47,7 @@ public class DispatchServlet extends HttpServlet{
 				if(req.getParameter("email") != null) {
 					req.setAttribute("member", new Member()
 							.setEmail(req.getParameter("email"))
-							.setPassword(req.getParameter("password"))
+							.setNo(Integer.parseInt(req.getParameter("no")))
 							.setName(req.getParameter("name")));
 				}
 			}else if("/member/delete.do".equals(servletPath)) {
